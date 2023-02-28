@@ -1,0 +1,31 @@
+version: "3.1"
+services:
+  productpage:
+    image: 17/productpage
+    build: ./product-page
+    ports:
+      - "9080:9080"
+    container_name: 17-productpage
+
+  ratings:
+    image: 17/ratings
+    build: ./ratings
+    container_name: 17-ratings
+    environment:
+      - SERVICE_VERSION=v3
+
+  details:
+    image: 17/details
+    build: ./details
+    environment:
+      - SERVICE_VERSION=v3
+      - ENABLE_EXTERNAL_BOOK_SERVICE=true
+    container_name: 17-details
+    
+
+  reviews:
+    image: 17/reviews
+    build: ./app/bookinfo/src/reviews/reviews-wlpcfg
+    environment:
+      - ENABLE_RATINGS=true
+    container_name: 17-reviews
